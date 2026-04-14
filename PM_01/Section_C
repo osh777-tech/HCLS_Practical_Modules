@@ -1,0 +1,37 @@
+//A program that prints a multiplication table for a specific number
+
+#include <iostream>
+#include <iomanip> //for better visual alignment
+
+using namespace std;
+
+int main()
+{
+    
+    int num, range;
+    
+    cout << "____________________PASCAL INC.____________________\n\n";
+    cout << "    ======MULTIPLICATION TABLE GENERATOR======\n\n";
+    
+    //Get the target number
+    cout << "Please enter the number you want to multiply : ";
+    cin >> num;
+    
+    //Get the range(e.g up to 10 or 12)
+    cout << "Enter the range (How far should it go?) : ";
+    cin >> range;
+    
+    cout << "\n     >> MULTIPLICATION TABLE FOR : " << num << endl;
+    cout << "-----------------------------------------" << endl;
+    
+    //loop to calculate and print the table
+    for (int i = 1; i <= range; ++i)
+    {
+        //setw(2) ensures the numbers align nicely if go into double digits
+        cout << num << " x " << setw(2) << i << " = " << num * i << endl;
+    }
+    
+    cout << "-----------------------------------------" << endl;
+    
+    return 0;
+}
