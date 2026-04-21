@@ -14,3 +14,5 @@ SECTION C
 > The Demonstration : Write the code, run it, and then intentionally break it ( e.g delete a semi-colon). Use the IDE's debugging tool to find the error, fix it, and save your actions.
 
 SECTION D
+
+This is my Section D assignment.
