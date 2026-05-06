@@ -1,0 +1,29 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+int main() {
+    //Declare a C-style character string
+    char cStyleString[] = "Hello";
+
+    //Declare a string class type
+    string cxxString = "Learner";
+
+    //Access string values (getting the first character)
+    char firstInitial = cxxString[0]; 
+
+    //Use string functions (getting the length of the string)
+    int stringLength = cxxString.length(); 
+
+    //Outputting the variables to demonstrate functionality
+    cout << "C-Style String: " << cStyleString << endl;
+    cout << "C++ String Class: " << cxxString << endl;
+    cout << "First letter accessed: " << firstInitial << endl;
+    cout << "Length of string class: " << stringLength << " characters" << endl;
+    
+    //Another string function example (concatenation)
+    cout << "Concatenated: " << cStyleString << " " << cxxString << "!" << endl;
+
+    return 0;
+}
