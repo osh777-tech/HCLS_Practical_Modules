@@ -1,0 +1,25 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+    //Declare and Name variables
+    int userAge;
+    double accountBalance;
+
+    //Assign a value to variables (done after declaration)
+    userAge = 18;
+    accountBalance = 250.50;
+
+    //Initialise variables (assigning a value at the exact time of declaration)
+    char userGrade = 'A';
+    string userName = "Joshua";
+
+    //Outputting the variables to the console to prove they work
+    cout << "Name: " << userName << endl;
+    cout << "Age: " << userAge << endl;
+    cout << "Grade: " << userGrade << endl;
+    cout << "Balance: R" << accountBalance << endl;
+
+    return 0;
+}
