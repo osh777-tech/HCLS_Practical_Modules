@@ -1,0 +1,59 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    //Assignment operator (=)
+    // We are assigning the value 10 to 'a' and 5 to 'b'
+    int a = 10;
+    int b = 5;
+
+    // Arithmetic operator (+, -, *, /)
+    int sum = a + b;
+    int divv = a/b;
+    int multi = a * b;
+    int subtr = a - b;
+
+    //Relational operator (>, <, ==)
+    // Checks if 'a' is greater than 'b'. Returns 1 for true, 0 for false.
+    bool isGreater = (a > b); 
+    
+    // Logical operator (&& means AND, || means OR)
+    // Checks if BOTH 'a' is positive AND 'b' is positive
+    bool logicalResult = (a > 0) && (b > 0); 
+    
+    // Bitwise operator (&, |, <<, >>)
+    // Operates on the binary bits. 10 & 5 results in 0.
+    int bitwiseAnd = a & b; 
+    
+    // sizeof operator
+    // Finds out how much computer memory (in bytes) an integer takes up
+    int sizeOfInt = sizeof(a); 
+    
+    // Comma operator 
+    // Evaluates from left to right. Sets x to 2, then returns 2 + 3.
+    int x;
+    int commaOp = (x = 2, x + 3); 
+    
+    // Conditional (Ternary) operator (? :)
+    // Reads as: "Is 'a' greater than 'b'? If yes, use 'a'. If no, use 'b'."
+    int maxVal = (a > b) ? a : b; 
+    
+    // Transform binary to decimal 
+    // The '0b' prefix tells C++ this is a binary number. 1010 in binary is 10 in decimal.
+    int binaryNum = 0b1010; 
+    
+    // --- Outputting the results to the screen ---
+    cout << "Arithmetic Sum: " << sum << endl;
+    cout << "Arithmetic Multiply: " << multii << endl;
+    cout << "Arithmetic Divide: " << divv << endl;
+    cout << "Arithmetic Subtract: " << subtr << endl;
+    cout << "Relational (1 is True): " << isGreater << endl;
+    cout << "Logical (1 is True): " << logicalResult << endl;
+    cout << "Bitwise AND: " << bitwiseAnd << endl;
+    cout << "Size of an int: " << sizeOfInt << " bytes" << endl;
+    cout << "Comma Operator Result: " << commaOp << endl;
+    cout << "Conditional Max Value: " << maxVal << endl;
+    cout << "Binary 1010 in Decimal: " << binaryNum << endl;
+
+    return 0;
+}
