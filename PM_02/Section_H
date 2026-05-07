@@ -1,0 +1,73 @@
+#include <iostream>
+
+using namespace std;
+
+//Define values and declare an enumerated type
+enum Day { MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY };
+
+//Write a function that swaps two values
+//We use references (&) here so the original variables get swapped
+void swapValues(int& a, int& b) 
+{
+    int temp = a;
+    a = b;
+    b = temp;
+}
+
+//Return a reference type variable
+//This function finds the larger number and returns a reference to it
+int& getLarger(int& x, int& y)
+{
+    if (x > y) 
+    {
+        return x;
+    } else 
+    {
+        return y;
+    }
+}
+
+int main()
+{
+    
+    cout << "  -----ENUMERATIONS----- " << endl;
+    
+    //Using the enumerated type (Monday is 0, Tuesday is 1, etc.)
+    Day today = WEDNESDAY;
+    cout << "Enum Day value (Wednesday is index 2): " << today << endl;
+    
+    cout << "\n -----REFERENCES------" << endl;
+    
+    //Create reference variables
+    int originalValue = 50;
+    int& referenceToValue = originalValue;
+    
+    cout << "Original Value: " << originalValue << endl;
+    cout << "Reference Value: " << referenceToValue << endl;
+    
+    //Proving they are linked: Changing the reference changes the original!
+    referenceToValue = 99;
+    cout << "Original after changing reference to 99: " << originalValue << endl;
+    
+    cout << "\n  -----SWAP FUNCTION-----" << endl;
+    int num1 = 10;
+    int num2 = 20;
+    cout << "Before swap: num1 = " << num1 << " | num2 = " << num2 << endl;
+    
+    swapValues(num1, num2);
+    cout << "After swap: num1 = " << num1 << " | num2 = " << num2 << endl;
+    
+    cout << "\n -----RETURN REFERENCE------" << endl;
+    int valA = 5;
+    int valB = 15;
+    cout << "valA = " << valA << " | valB = " << valB << endl;
+    
+    /*getLarger returns a reference to valB. 
+    We then assign 100 to it*/
+    getLarger(valA, valB) = 100;
+    cout << "After assigning 100 to the returned reference (the larger value): " << endl;
+    cout << "valA = " << valA << " | valB = " << valB << endl;
+    
+    
+    return 0;
+}
