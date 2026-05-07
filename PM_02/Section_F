@@ -1,0 +1,71 @@
+#include <iostream>
+#include <algorithm> //For copy, sort,equal, find, and fill
+
+using namespace std;
+
+int main()
+{
+    //Declare and initialise an array (size 10, but putting 5 items in it initially)
+    int arr[10] = {10, 40, 20, 50, 30};
+    //To track how many items are actually in our array
+    int currentSize = 5;
+    
+    //Use a pointer to an array
+    int* ptr = arr;
+    
+    //Access elements using indexes & access values
+    int firstElement = arr[0];
+    //Accessing the second value using our pointer
+    int secondElement = *(ptr + 1);
+    
+    arr[currentSize] = 60;
+    currentSize++; //We now have six items
+    
+    /*Add elements to an array ( adding '60' to the end) 
+    (Let's delete the item at index 2, which is 20) */
+    for(int i = 2; i < currentSize - 1; i++)
+    {
+        arr[i] = arr[i + 1]; //Shift everything to overwrite the '20'
+    }
+    currentSize--; //We are back to 5 items
+    
+    //Print array elements & Looping through arrays
+    cout << "Array after adding & deleting: ";
+    for(int i = 0; i < currentSize; i++)
+    {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+    
+    //Find minimum and maximum values
+    int minVal = *min_element(arr, arr + currentSize);
+    int maxVal = *max_element(arr, arr + currentSize);
+    cout << "Minimum: " << minVal << " | Maximum: " << maxVal << endl;
+    
+    //Sort Arrays
+    sort(arr, arr + currentSize);
+    cout << "Sorted Array first element is now: " << arr[0] << endl;
+    
+    //Copy an array
+    int copiedArr[10];
+    copy(arr, arr + currentSize, copiedArr);
+    
+    //Check if arrays are equal
+    bool areEqual = equal(arr, arr + currentSize, copiedArr);
+    cout << "Is the new array equal to the copied one? " << (areEqual ? "Yes" : "No") << endl;
+    
+    //Search Arrays (Searching for the number 40)
+    int* searchResult = find(arr, arr + currentSize, 40);
+    if(searchResult != arr + currentSize) 
+    {
+        cout << "Number 40 found at index: " << distance(arr, searchResult) << endl;
+    }
+    
+    //Fill arrays
+    int fillArr[5];
+    fill(fillArr, fillArr + 5, 99);
+    //fills every spot in this array with the number 99
+    cout << "Filled array sample: " << fillArr[0] << ", " << fillArr[1] << endl;
+    
+    return 0;
+}
