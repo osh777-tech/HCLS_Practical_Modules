@@ -1,0 +1,37 @@
+#include <iostream>
+
+using namespace std;
+
+int main() {
+    
+    //The variable we are comparing
+    char grade = 'B';
+    
+    cout << "      ===== GRADE EVALUATOR =====" << endl;
+    cout << "Your Grade : " << grade << "\n" << endl;
+    
+    //Switch statement comparing 'grade' against a set of values
+    switch (grade) {
+        case 'A':
+            cout << "Result: Excellent work! You achieved top marks." << endl;
+            break;
+        case 'B':
+            cout << "Result: Great job! You did very well." << endl;
+            break;
+        case 'C':
+            cout << "Result: Good effort, you passed." << endl;
+            break;
+        case 'D':
+            cout << "Result: You passed, but there is room for improvement." << endl;
+            break;
+        case 'F':
+            cout << "Result: Unfortunately, you failed. Please see the instructor." << endl;
+            break;
+        default:
+        //The default block runs if none of the cases match
+            cout << "Error: Invalid grade entered." << endl;
+            break;
+            
+    }
+    return 0;
+}
