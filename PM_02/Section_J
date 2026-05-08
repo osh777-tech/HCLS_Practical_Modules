@@ -1,0 +1,35 @@
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    
+    //size of array
+    int arraySize = 5;
+    
+    cout << "   ====== DYNAMIC ARRAYS ======" << endl;
+    cout << "Allowcating memory for an array of size " << arraySize << "....\n" << endl;
+    
+    //Create dynamic array using the new keyword
+    //Initialise dynamically allocated arrays (the {} brackets assign these starting values)
+    int* dynamicArray = new int[arraySize]{10, 20, 30, 40, 50};
+    
+    //Let's print out the values to prove it was created and initialized successfully
+    cout << "Array elements: ";
+    for(int i = 0; i < arraySize; i++) {
+        cout << dynamicArray[i] << " ";
+    }
+    cout << "\n" << endl;
+    
+    //Delete a dynamic array from the computer memory
+    //We must use 'delete[]' (with brackets) because it is an array, not a single variable
+    delete[] dynamicArray;
+    
+    //Point the deleted pointer to 'nullptr' so we don't accidentally use it again
+    dynamicArray = nullptr;
+    
+    cout << "Memory successfully cleared and dynamic array deleted." << endl;
+    
+    return 0;
+}
