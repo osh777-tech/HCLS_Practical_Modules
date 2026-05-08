@@ -1,0 +1,35 @@
+#include <iostream>
+
+using namespace std;
+
+int main() {
+    
+    //User Input
+    int age;
+    cout << "What is your current age? | ";
+    cin >> age;
+    
+    cout << "\n        =====RESTRICTED SYSTEM=====" << endl;
+    cout << "Checking user age: " << age << "...\n" << endl;
+    
+    //Use a combination of the try and catch keywords
+    try {
+        if (age < 18) 
+        {
+            //throw exceptions
+            //if the age is under 18, we throw the age number as an arror
+            throw (age);
+        }
+        //If no exception is thrown, this code runs normally
+        cout << "Access Granted. Welcome to the system!" << endl;
+    }
+    
+    //Catch exceptions
+    //The catch block "catches" the thrown number and handles the error gracefully
+    catch (int errorNum) {
+        cout << " [ERROR] Access Denied. You must be at least 18 years old. " << endl;
+        cout << "Exception caught: Age provided was " << errorNum << "." << endl;
+    }
+    
+    return 0;
+}
