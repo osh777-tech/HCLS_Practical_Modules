@@ -1,0 +1,34 @@
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    //A standard variable
+    int myAge = 20;
+    
+    //Declare pointer
+    int* agePointer;
+    
+    //Obtain the address of a variable (using the & symbol)
+    //Initialise pointers (assigning that address to our above pointer)
+    agePointer = &myAge;
+    
+    cout << "   =====POINTERS DEMONSTRATION=====\n" << endl;
+    cout << "Original variable (myAge) value: " << myAge << endl;
+    
+    //Printing the pointer shows the actual memory address where 'myAge' lives
+    cout << "Memory address stored in agePointer: " << agePointer << endl;
+    
+    //Acess variables by its address using pointers
+    //We use the * symbol (dereferencing) to look inside the memory address and get the value
+    cout << "Value accessed via pointer (*agePointer): " << *agePointer << endl;
+    
+    //Let's modify the value using the pointer to prove that they are connected!
+    *agePointer = 99;
+    
+    cout << "\nAfter changing the value via the pointer to 99..." << endl;
+    cout << "Original variable (myAge) is now : " << myAge << endl;
+    
+    return 0;
+}
