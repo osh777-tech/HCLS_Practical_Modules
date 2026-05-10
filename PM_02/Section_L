@@ -1,0 +1,36 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+int main()
+{
+    //Declare a char
+    char myLetter;
+    
+    cout << "  =====CHARACTER DEMONSTRATION=====" << endl;
+    
+    //input char
+    //We ask user to type a character
+    cout << "Please enter a single character (e.g.,A, b, 7, ?) : ";
+    cin >> myLetter;
+    
+    //Print char value
+    cout << "\nYou entered the character: " << myLetter << endl;
+    
+    //Print ACSII values
+    // (int), is to force C++ show us the secret math number behind the letter!
+    cout << "The ASCII value of '" << myLetter << "' is: " << (int)myLetter << endl;
+    
+    //Convert char to string
+    //This creates a string of length 1. filled with out character
+    string stringVersion = string(1, myLetter);
+    
+    //Let's print it out and attach some text to prove it behaves like a normal string now
+    cout << "Converted to string: " << stringVersion << endl;
+    cout << "Proof it's a string: \"" << stringVersion + " is now part of a larger string!\"" << endl;
+    
+    
+    
+    return 0;
+}
