@@ -1,0 +1,88 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+
+using namespace std;
+
+int main() {
+    // 1. USER INPUT (Moved to the top, exactly like you wanted!)
+    cout << "Enter a single word to save to a file (e.g., Joshua or C++): ";
+    string userInput;
+    cin >> userInput;
+    
+    ofstream userFile("user.txt");
+    userFile << userInput;
+    userFile.close();
+    
+    cout << "\n====== FILE HANDLING ======" << endl;
+    
+    // 2. WE MUST CREATE 'demo.txt' HERE (Before we try to read it below)
+    ofstream outFile("demo.txt");
+    
+    // Conduct error handling with IO stream
+    if (outFile.fail()) {
+        cout << "Error: Could not create file!" << endl;
+        return 0;
+    }
+    
+    // Writing personalized text to the file
+    outFile << "Joshua"; 
+    outFile.close();
+    
+    // Write bytes to file
+    ofstream byteFile("bytes.txt", ios::binary);
+    byteFile.write("DATA", 4);
+    byteFile.close();
+    
+    // 3. NOW WE CAN READ DATA (Because demo.txt actually exists now)
+    cout << "\n-----READING DATA-----" << endl;
+    
+    // Read from files
+    ifstream inFile("demo.txt");
+    
+    // Peek characters without extracting
+    char peekedChar = inFile.peek();
+    cout << "Peeked first character of demo.txt: " << peekedChar << endl;
+    
+    // Extract characters from files
+    char extractedChar = inFile.get();
+    cout << "Extracted first character: " << extractedChar << endl;
+    
+    // Return extracted character on stream
+    inFile.putback(extractedChar);
+    cout << "Put the character '" << extractedChar << "' back into the stream." << endl;
+    
+    // Reading a few characters to test our counter 
+    char buffer[10];
+    inFile.read(buffer, 3);
+    
+    // Count characters from last operation
+    cout << "Characters read in the last operation: " << inFile.gcount() << endl;
+    inFile.close();
+    
+    // 4. COMPARING THE FILES
+    cout << "\n ------COMPARING FILES-------" << endl;
+    
+    ifstream file1("demo.txt");
+    ifstream file2("user.txt");
+    string content1, content2;
+    
+    file1 >> content1;
+    file2 >> content2;
+    
+    cout << "File 1 says: " << content1 << endl;
+    cout << "File 2 says: " << content2 << endl;
+    
+    // Checking if the files match
+    if (content1 == content2) {
+        cout << "Comparison Result: The files have matching contents!" << endl;
+    } else {
+        cout << "Comparison Result: The files have different contents." << endl;
+    }
+    
+    file1.close();
+    file2.close(); 
+    
+    return 0; 
+
+}
