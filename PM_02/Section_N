@@ -1,0 +1,50 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+//Creating a C++ structure
+//Combine data items with struct (grouping a string, int, and double together)
+struct Student {
+    string name;
+    int age;
+    double gpa;
+};
+
+//Pass a struct to a function as an argument
+//This function takes our custom 'Student' type just like it would take an 'int'
+void printStudentDetails(Student s) {
+    cout << "Name: " << s.name << " | Age: " << s.age << " | GPA: " << s.gpa << endl;
+}
+
+int main() {
+    
+    cout << "   ======= C++ STRUCTURES (STRUCT) ======" << endl;
+    
+    //Create struct instances
+    //Initialise a structure (using the {} brackets to assign values in order)
+    Student learner1 = {"Joshua", 19, 3.8};
+    
+    //Access a structure 
+    //We use the dot(.) operator to access specific pieces of data inside the structure
+    cout << "Accessing specific data directly: Learner's name is " << learner1.name << "\n" << endl;
+    
+    cout << "------Passing Struct to Function------" << endl;
+    
+    printStudentDetails(learner1);
+    
+    cout << "\n-----Pointer to Struct ----" << endl;
+    
+    //Create a pointer to a structure 
+    Student* studentPointer = &learner1;
+    
+    //When using a pointer to a struct, we use the arrow (->) operator instead of the doy(.)
+    cout << "Accessing GPA via pointer: " << studentPointer->gpa << endl;
+    
+    //Let's modify the data using the pointer to show how it works
+    studentPointer->gpa = 4.0;
+    
+    cout << "Updated GPA via pointer! New GPA is: " << learner1.gpa << ".0" << endl;
+    
+    return 0;
+}
