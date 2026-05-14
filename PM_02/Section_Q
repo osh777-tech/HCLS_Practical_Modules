@@ -1,0 +1,57 @@
+#include <iostream>
+#include <list>
+
+using namespace std;
+
+//I'mma create a quick helper function to print our list so we don't have to rewrite this loop multiple times
+void printList(const list<int>& myList) {
+    for (int val : myList) {
+        cout << val << " ";
+    }
+    cout << endl;
+} 
+
+int main() {
+    
+    cout << " ======STD::LIST IN C++ ======" << endl;
+    
+    //Define a standard list 
+    list<int> numbers = {10, 20, 30};
+    cout << "Initial list: ";
+    printList(numbers);
+    
+    //Insert into a list (adding to the ends)
+    numbers.push_front(5);
+    numbers.push_back(40);
+    cout << "After inserting at front and back: ";
+    printList(numbers);
+    
+    //Delete from a list (removing from the ends)
+    numbers.pop_front();
+    numbers.pop_back();
+    cout << "After deleting from front and back: ";
+    printList(numbers);
+    
+    cout << "\n   ------Inserting & Removing Anywhere ------" << endl;
+    
+    //Insert and remove items from anywhere with std::list
+    //We'll use an iterator to walk to a specific spot in the middle
+    list<int>::iterator it = numbers.begin();
+    advance(it, 1); //Move iterator forward by 1 (it now points to 20)
+    
+    //Insert the number '15' exactly where the iterator is pointing
+    numbers.insert(it, 15);
+    cout << "After inserting 15 in the middle: ";
+    printList(numbers);
+    
+    //Now let's remove an item from the middle.
+    //We will reset our iterator to the beginning walk to the 3rd spot (index 2), and erase it.
+    it = numbers.begin();
+    advance(it, 2); //Points to the numbers 20 (since our list is now 10, 15, 20, 30)
+    
+    numbers.erase(it);
+    cout << "After removing 20 from the middle: ";
+    printList(numbers);
+    
+    return 0;
+}
