@@ -1,0 +1,72 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+//Declare a class
+class Robot {
+    
+    public: 
+    //Access class members (these are the variables I have inside the class)
+        string name;
+        int batteryLevel;
+        
+        //Initialise objects using constructors
+        //A constructor runs automatically the exact moment an object is created
+        Robot(string robotName, int startingBattery) {
+            
+            name = robotName;
+            batteryLevel = startingBattery;
+            
+            cout << "Constructor: Robot '" << name << "' has been built!" << endl;
+        }
+        
+        //Destroy class objects with destuctors
+        //A destructor (with the ~ symbol) runs automatically when the object is deleted or the program ends
+        ~Robot() {
+            cout << "Destructor: Robot '" << name << "' is being powered down." << endl;
+        }
+        
+        //Define class member functions
+        void performTask() {
+            
+            if (batteryLevel > 0) {
+                
+                cout << name << " is performing a task. Beep Beep Boop." << endl;
+                //Task costs 10 battery level so...
+                batteryLevel -= 10;
+                
+            } else {
+                cout << name << "'s battery is empty!" << endl;
+                
+            }
+        }
+};
+
+int main() {
+    
+    cout << "    ===== CLASSES AND OBJECTS ======" << endl;
+    
+    //Declare class objects 
+    //Create multiple objects 
+    //This triggers the Constructor immediately for both robots
+    Robot myRobot1("PASCAL", 100);
+    Robot myRobot2("P4SC4L",  50);
+    
+    cout << "\n -----Accessing Members & Functions ------" << endl;
+    
+    //Access class members (printing their starting stats)
+    cout << "\n" << myRobot1.name << " has " << myRobot1.batteryLevel << " % battery level.\n" << endl;
+    
+    //Making them do work using their member functions
+    myRobot1.performTask();
+    myRobot2.performTask();
+    
+    cout << "\n" << myRobot1.name << " battery is now: " << myRobot1.batteryLevel << "%\n" << endl;
+    
+    cout << "-----Program Ending -----" << endl;
+    
+    //Right as the program returns 0 and ends, the Destructors will run automatically!
+    
+    return 0;
+}
