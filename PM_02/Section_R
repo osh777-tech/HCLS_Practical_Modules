@@ -1,0 +1,45 @@
+#include <iostream>
+#include <cmath> // Required to use built-in math functions
+#include <string>
+
+using namespace std;
+
+//Use the Function declaration/prototype to declare a function without a body
+//We put these at the top so main() knows they exist, but we write the actual code at the bottom!
+void greetUser( string name);
+double calculateArea(double radius);
+
+int main() {
+
+	cout << " ====== WRITING AND CALLING FUNCTIONS ======" << endl;
+
+	string myName = "Joshua";
+
+	//Call a function
+	//Pass arguments ( we are passing the 'myName' variable)
+	//Invoke user-defined functions
+	greetUser(myName);
+
+	double myRadius = 5.0;
+	double circleArea = calculateArea(myRadius);
+	cout << "The area of a circle with raidus " << myRadius << " is : " << circleArea << "\n" << endl;
+
+	cout << " ----- built-in Functions ------" << endl;
+
+	//Invoke built-in Functions
+	//We are calling the sqrt() and pow() which are built directly into C++
+	double number = 25.0;
+	cout << "Built-in sqrt(): The square root of " << number << " is " << sqrt(number) << endl;
+	cout << "Built-in pow() : 2 raised to the power of 3 is " << pow(2.0, 3.0) << endl;
+
+	return 0;
+}
+
+//Now we actually define the bodies of the functions we prototyped at the top
+void greetUser(string name) {
+	cout << "Hello, " << name << "!Welcome to Section R of this module." << endl;
+}
+
+double calculateArea(double r) {
+	return 3.14159 * r * r;
+}
