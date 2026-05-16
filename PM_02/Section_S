@@ -1,0 +1,53 @@
+#include <iostream>
+#include <ctime>
+
+using namespace std;
+
+int main() {
+    
+    cout << "  ======= DATE AND TIME IN C++ =======" << endl;
+    
+    //Compile date and time
+    //_DATE_AND_TIME are built-in macros showing when the code was compiler
+    
+    cout << "Code Compiled at date : " << __DATE__ << endl;
+    cout << "Code Compile at time  : " << __TIME__ << "\n" <<endl;
+    
+    //Date and time now
+    //time(0) grabs the current time from my computer's system
+    time_t now = time(0);
+    
+    //Date and Time print
+    //ctime() converts the raw time data into a readable default string
+    cout << " -----Printing Current Data & Time ------" << endl;
+    cout << "Current local time is : " << ctime(&now) << endl;
+    
+    //Date & Time format
+    //We use the 'tm' structure to break the time down into specific pieces
+    tm *ltm = localtime(&now);
+    cout << " -----Custom Formatted Date & Time -----" << endl;
+    
+    //Note: tm_year is years since 1900, and tm_mon is months since January (0-11)
+    int currentYear = 1900 + ltm->tm_year;
+    int currentMonth = 1 + ltm->tm_mon;
+    int currentDay = ltm->tm_mday;
+    
+    cout << "Formatted string (DD/MM/YYYY): " << currentDay << "/" << currentMonth << "/" << currentYear << "\n" << endl;
+    
+    //Compare date and Time
+    cout << " ------ Comparing Dates --------" << endl;
+    
+    //Let's create a time exactly 1 hour (3600 seconds) in the past 
+    time_t oneHourAgo = now - 3600;
+    
+    //difftime() calculates the difference in seconds betweem two times
+    double secondsDiff = difftime(now, oneHourAgo);
+    
+    if (now > oneHourAgo) {
+        
+        cout << "Comparison: The 'now' time is mathematically greater than 1 hours ago." << endl;
+    }
+    cout << "Time difference is exactly: " << secondsDiff << " seconds. " << endl;
+    
+    return 0;
+}
