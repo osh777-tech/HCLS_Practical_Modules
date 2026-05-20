@@ -1,0 +1,41 @@
+#include <iostream>
+
+using namespace std;
+
+int main() {
+	cout << "=== SECTION T: DEBUGGING IN C++ ===" << endl;
+
+	//Identify incorrect code and analyse how a program "flows"
+	// SCENARIO: We want to calculate the factorial of 5 (5! = 120).
+	// The original buggy code initialized factorial to 0, making the result always 0.
+
+	int number = 5;
+	int buggyFactorial = 0; // BUG: Multiplying by 0 will always result in 0!
+
+	for(int i = 1; i <= number; i++) {
+		buggyFactorial = buggyFactorial * i;
+	}
+	cout << "Buggy Result (Expected 120): " << buggyFactorial << "\n" << endl;
+
+	// Apply debugging steps to debug effectively and efficiently
+	// Step 1: Identify the bug (Output is 0 instead of 120).
+	// Step 2: Trace the flow using print statements to find exactly where it breaks.
+	// Step 3: Fix the initialization bug.
+
+	cout << "--- Applying Debugging Tools (Trace Logs) & Fixing Code ---" << endl;
+
+	int fixedFactorial = 1; // FIXED: Initialized to 1 instead of 0
+
+	for(int i = 1; i <= number; i++) {
+		fixedFactorial = fixedFactorial * i;
+
+		// Use debugging tools for diagnosing and fixing bugs and errors
+		// Printing these "Trace Logs" is a fundamental debugging tool to watch the data flow
+		cout << "[DEBUG] Flow trace -> i: " << i << " | fixedFactorial is now: " << fixedFactorial << endl;
+	}
+
+	cout << "\nFixed Result (Expected 120): " << fixedFactorial << endl;
+	cout << "Debugging Successful! Code flow is correct." << endl;
+
+	return 0;
+}
