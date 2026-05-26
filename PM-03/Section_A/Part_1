@@ -1,0 +1,61 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+//Create a parent class first
+class Vehicle {
+	protected:
+		//define properties in the class
+		string brand;
+	public:
+		//Constructor to initialize
+		Vehicle(string b) {
+			//Set the value of the properties
+			brand = b;
+		}
+		
+		//Virtual method to be overridden
+		virtual void displayInfo() {
+			cout << "This is a vehicle from brand: " << brand << endl;
+		}
+};
+
+//Create child classes with unique properties
+//Inheritance demonstrated here
+class Car : public Vehicle {
+	private:
+		int doors; //Unique property for Car
+	public :
+		Car(string b, int d) : Vehicle(b) { doors = d; }
+		
+		//Overriding demonstrated here
+		void displayInfo() override {
+			//(Correction) : Using standard C++ dot/member access instead of 'with'
+			cout << "Car Brand: " << brand << " | Doors: " << doors << endl;
+		}
+};
+
+class Motorcycle : public Vehicle {
+	private:
+		bool hasSidecar; //Unique property for Motorcycle
+	public :
+		Motorcycle(string b, bool sidecar) : Vehicle(b) { hasSidecar = sidecar; }
+		
+		void displayInfo() override {
+			cout << "Motorcycle Brand: " << brand << " | Has Sidecar: " << (hasSidecar ? "Yes" : "No") << endl;
+		}
+};
+
+int main() {
+	
+	//Create objects from child class and reuse the class structure
+	Car myCar("Jeep", 4);
+	Motorcycle myBike("Harley-Davidson", false);
+	
+	cout << " ----Vehicle Information ----" << endl;
+	myCar.displayInfo();
+	myBike.displayInfo();
+	
+	return 0;
+}
