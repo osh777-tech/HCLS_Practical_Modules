@@ -1,0 +1,30 @@
+#include <iostream>
+
+using namespace std;
+
+class Rectangle {
+	private:
+		double length;
+		double width;
+		
+	public:
+		//Constructor to set dimensions
+		Rectangle(double l, double w) {
+			length = l;
+			width = w;
+		}
+		//Method to calculate area
+		double calculateArea() {
+			return length * width;
+		}
+};
+
+int main() {
+	//Instantiate the rectangle
+	Rectangle myRect(5.5, 3.0);
+	
+	cout << " -----Rectangle Calculation ----" << endl;
+	cout << " The area of the rectangle is: " << myRect.calculateArea() << endl;
+	
+	return 0;
+}
