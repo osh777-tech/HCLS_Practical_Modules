@@ -1,0 +1,41 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class RaceCar {
+	private:
+		string model;
+		int speed; //Intorducing state of an object with speed variable
+		
+	public:
+		//Invoke the constructor function to create and initialize a new object
+		RaceCar(string m, int initialSpeed) {
+			model = m;
+			speed = initialSpeed;
+			cout << "[Constructor] Created " << model << " with starting speed: " << speed << " km/h" << endl;
+			
+		}
+		
+		//Method to change the state of the object
+		void accelerate(int amount) {
+			speed += amount;
+			cout << model << " accelerated! Current speed is now : " << speed << "km/h." << endl;
+		}
+};
+
+//Compiling this constructor program and observing the ouput
+int main() {
+	
+	cout << " -----Race Simulation------" << endl;
+	
+	///Create a C++ Class and acouple of objects 
+	RaceCar car1("Ferrari", 0);
+	RaceCar car2("McLaren", 50);
+	
+	cout << endl << " ======Action=====" << endl;
+	car1.accelerate(120);
+	car2.accelerate(80);	
+	
+	return 0;
+}
