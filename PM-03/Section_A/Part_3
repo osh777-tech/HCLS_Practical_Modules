@@ -1,0 +1,37 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class Book {
+	public:
+		string title;
+		string author;
+		int pages;
+		
+		//Constructor
+		Book(string t, string a, int p) {
+			title = t;
+			author = a;
+			pages = p;
+		}
+		void displayBook() {
+			cout << "Title : " << title << "\nAuthor: " << author << "\nPages : " << pages << "\n" << endl;
+		}
+};
+
+int main() {
+	cout << "-------Library Collection -------" << endl;
+	
+	//Creating three instances of the Book class
+	Book book1("1984", "George Orwell", 328);
+	Book book2("To pimp a butterfly", "Kendrick Lamar Duckworth", 999);
+	Book book3("Romeo and Juliet", "William Shakespear", 420);
+	
+	//Displaying the instances
+	book1.displayBook();
+	book2.displayBook();
+	book3.displayBook();
+	
+	return 0;
+}
