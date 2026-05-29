@@ -1,0 +1,167 @@
+#include <iostream>
+#include <vector>
+#include <string>
+
+// ============================================================================
+// 1. ENCAPSULATION 
+// Object-Oriented Concept: Bundling data and methods, hiding internal states.
+// ============================================================================
+class PowerCore {
+private:
+    std::string coreModel;
+    double maxCapacity;
+    double currentEnergy;
+    bool isOnline;
+
+public:
+    PowerCore(std::string model, double capacity) 
+        : coreModel(model), maxCapacity(capacity), currentEnergy(capacity), isOnline(true) {}
+
+    double getEnergyLevel() const { 
+        return currentEnergy; 
+    }
+
+    std::string getModel() const { 
+        return coreModel; 
+    }
+
+    void drawPower(double amount) {
+        if (!isOnline) {
+            std::cout << "[POWER CORE] System offline. Cannot draw power." << std::endl;
+            return;
+        }
+        if (currentEnergy >= amount) {
+            currentEnergy -= amount;
+        } else {
+            currentEnergy = 0.0;
+            isOnline = false;
+            std::cout << "[CRITICAL ERROR] Power Core depleted! System shutting down." << std::endl;
+        }
+    }
+};
+
+// ============================================================================
+// 2. INHERITANCE & 3. POLYMORPHISM
+// Object-Oriented Concept: Parent/Child relationships and shared behaviors.
+// ============================================================================
+
+class HardwareComponent {
+protected:
+    std::string componentName;
+    bool isActive;
+
+public:
+    HardwareComponent(std::string name) : componentName(name), isActive(false) {}
+    
+    virtual ~HardwareComponent() {}
+
+    void bootUp() { isActive = true; }
+    void shutDown() { isActive = false; }
+    
+    virtual void executeDiagnostics() const = 0; 
+};
+
+class LidarSensor : public HardwareComponent {
+private:
+    double scanRadius; 
+
+public:
+    LidarSensor(std::string name, double radius) 
+        : HardwareComponent(name), scanRadius(radius) {}
+
+    void executeDiagnostics() const override {
+        if (isActive) {
+            std::cout << " -> [LIDAR] " << componentName 
+                      << " scanning a " << scanRadius << "m radius. Point cloud generated." << std::endl;
+        } else {
+            std::cout << " -> [LIDAR] " << componentName << " is currently OFFLINE." << std::endl;
+        }
+    }
+};
+
+class RoboticArm : public HardwareComponent {
+private:
+    int degreesOfFreedom; 
+
+public:
+    RoboticArm(std::string name, int dof) 
+        : HardwareComponent(name), degreesOfFreedom(dof) {}
+
+    void executeDiagnostics() const override {
+        if (isActive) {
+            std::cout << " -> [SERVO ARM] " << componentName 
+                      << " running calibration on all " << degreesOfFreedom << " joints. Torque nominal." << std::endl;
+        } else {
+            std::cout << " -> [SERVO ARM] " << componentName << " is currently OFFLINE." << std::endl;
+        }
+    }
+};
+
+// ============================================================================
+// 4. AGGREGATION
+// Object-Oriented Concept: Establishing a 'Has-A' relationship.
+// ============================================================================
+
+class AutonomousRover {
+private:
+    std::string roverDesignation;
+    PowerCore* mainPower; 
+    std::vector<HardwareComponent*> payload;
+
+public:
+    // Ensure the {} at the end of this line stays intact!
+    AutonomousRover(std::string designation, PowerCore* powerSource) 
+        : roverDesignation(designation), mainPower(powerSource) {}
+
+    void installComponent(HardwareComponent* component) {
+        payload.push_back(component);
+        std::cout << "System Integration: Component loaded into " << roverDesignation << "'s payload bay." << std::endl;
+    }
+
+    void initiateSystemCheck() {
+        std::cout << "\n=================================================" << std::endl;
+        std::cout << " INITIATING SYSTEM DIAGNOSTICS FOR: " << roverDesignation << std::endl;
+        std::cout << "=================================================" << std::endl;
+        
+        std::cout << "[STATUS] Core Model: " << mainPower->getModel() << std::endl;
+        std::cout << "[STATUS] Energy Matrix: " << mainPower->getEnergyLevel() << " kWh remaining." << std::endl;
+        
+        mainPower->drawPower(15.5); 
+        
+        std::cout << "\nBooting up hardware payload..." << std::endl;
+        
+        for (HardwareComponent* comp : payload) {
+            comp->bootUp();
+            comp->executeDiagnostics(); 
+        }
+        
+        std::cout << "\n[STATUS] Energy Matrix post-diagnostics: " 
+                  << mainPower->getEnergyLevel() << " kWh." << std::endl;
+        std::cout << "=================================================\n" << std::endl;
+    }
+}; // <--- THIS IS THE CLOSING BRACE AND SEMICOLON THAT WAS MISSING!
+
+// ============================================================================
+// MAIN EXECUTION
+// ============================================================================
+
+int main() {
+    std::cout << "--- ROBOTICS FIRMWARE INITIALIZATION ---" << std::endl;
+
+    PowerCore reactor("Fusion-Cell-Mk4", 500.0);
+
+    AutonomousRover pathfinder("ARES-Pathfinder-VI", &reactor);
+    std::cout << "\n";
+
+    LidarSensor navLidar("Nav-Lidar-Array", 50.0);
+    LidarSensor geoLidar("Geology-Scanner", 5.0);
+    RoboticArm sampleArm("Titanium-Sample-Extractor", 7);
+
+    pathfinder.installComponent(&navLidar);
+    pathfinder.installComponent(&geoLidar);
+    pathfinder.installComponent(&sampleArm);
+
+    pathfinder.initiateSystemCheck();
+
+    return 0;
+}
