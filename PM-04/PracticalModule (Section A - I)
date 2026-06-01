@@ -1,0 +1,419 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <stack>
+#include <map>
+#include <algorithm>
+#include <fstream>
+#include <memory>
+
+// ==========================================
+// SECTION A: STRUCTURES AND CLASSES (PM-04-PS01)
+// ==========================================
+
+// PA0101 & PA0102: Structure definition and individual elements
+struct PersonStruct {
+    std::string name;
+    int age;
+};
+
+// PA0110: Point class
+class Point {
+protected:
+    double x, y;
+public:
+    // PA0107: Give a default value for the constructor method
+    Point(double x_val = 0.0, double y_val = 0.0) : x(x_val), y(y_val) {} 
+    
+    // PA0205: Call a destructor (Virtual Destructor for safe polymorphism)
+    virtual ~Point() {
+        // Destructor logic
+    }
+    
+    // PA0204: Declare a virtual function
+    virtual void display() const { 
+        std::cout << "Point Location: (" << x << ", " << y << ")" << std::endl;
+    }
+};
+
+// PA0110: Point2D class
+class Point2D : public Point {
+public:
+    Point2D(double x_val = 0.0, double y_val = 0.0) : Point(x_val, y_val) {}
+    
+    // PA0203: Override the base function of a class
+    void display() const override {
+        std::cout << "Point2D Coordinates -> X: " << x << ", Y: " << y << std::endl;
+    }
+
+    // PA0202: Invoke operator overloading
+    Point2D operator+(const Point2D& other) const {
+        return Point2D(this->x + other.x, this->y + other.y);
+    }
+};
+
+// PA0104: Write a class that represents the user with a unique identifier
+class User {
+private:
+    std::string username;
+    int uniqueID;
+    static int idCounter;
+
+public:
+    // PA0109: Call a constructor using constructor (Delegating constructor)
+    User() : User("Guest") {} 
+
+    // PA0106: Create constructor converts (Converting string to User)
+    User(std::string name) {
+        username = name;
+        uniqueID = ++idCounter;
+    }
+
+    // PA0105: Use the copy constructor
+    User(const User& other) {
+        username = other.username + " (Copy)";
+        uniqueID = ++idCounter; 
+    }
+
+    // PA0108: Call constructors and destructors
+    ~User() {}
+
+    // PA0103: Create a method inside a class
+    void showUserDetails() const {
+        std::cout << "User ID: " << uniqueID << " | Name: " << username << std::endl;
+    }
+};
+int User::idCounter = 1000;
+
+
+// ==========================================
+// SECTION B: OVERLOADED FUNCTIONS (PM-04-PS02)
+// ==========================================
+
+// PA0201: Invoke an overloaded function
+void printMessage(std::string msg) {
+    std::cout << "String message: " << msg << std::endl;
+}
+void printMessage(int code) {
+    std::cout << "Integer code: " << code << std::endl;
+}
+
+
+// ==========================================
+// SECTION C: CREATE TEMPLATES (PM-04-PS03)
+// ==========================================
+
+// PA0301: Declare function templates
+template <typename T>
+T getMaximum(T a, T b) {
+    return (a > b) ? a : b;
+}
+
+// PA0302: Write class templates
+template <class T>
+class DataHolder {
+private:
+    T data;
+public:
+    DataHolder(T d) : data(d) {}
+    void show() { std::cout << "Data: " << data << std::endl; }
+};
+
+
+// ==========================================
+// SECTION D: NAMESPACE DECLARATION (PM-04-PS04)
+// ==========================================
+
+// PA0401: Declare namespaces and namespace members
+namespace HCLSTools {
+    void printHeader() {
+        std::cout << "--- Human Capital Learning Solutions ---" << std::endl;
+    }
+}
+
+
+// ==========================================
+// SECTION I: MINI DATABASE (PM-04-PS09)
+// ==========================================
+
+struct DBRecord {
+    int id;
+    std::string name;
+    std::string phone;
+};
+
+class MiniDatabase {
+private:
+    std::vector<DBRecord> records;
+    int nextId = 1;
+
+public:
+    // PA0901: Add people
+    void addPerson(std::string name, std::string phone) {
+        records.push_back({nextId++, name, phone});
+        std::cout << "Added: " << name << " to database.\n";
+    }
+
+    // PA0902: Show added people
+    void showAll() {
+        if (records.empty()) {
+            std::cout << "Database is empty.\n";
+            return;
+        }
+        for (const auto& r : records) {
+            std::cout << "ID: " << r.id << " | Name: " << r.name << " | Phone: " << r.phone << "\n";
+        }
+    }
+
+    // PA0903: Save people to file
+    void saveToFile() {
+        std::ofstream outFile("database.txt");
+        for (const auto& r : records) {
+            outFile << r.id << "," << r.name << "," << r.phone << "\n";
+        }
+        outFile.close();
+        std::cout << "Database saved to database.txt\n";
+    }
+
+    // PA0904: Load people from file
+    void loadFromFile() {
+        records.clear();
+        std::ifstream inFile("database.txt");
+        if (!inFile) {
+            std::cout << "No existing database file found.\n";
+            return;
+        }
+        std::string line;
+        while (std::getline(inFile, line)) {
+            // Simplified CSV parsing
+            size_t pos1 = line.find(',');
+            size_t pos2 = line.find(',', pos1 + 1);
+            if (pos1 != std::string::npos && pos2 != std::string::npos) {
+                int id = std::stoi(line.substr(0, pos1));
+                std::string name = line.substr(pos1 + 1, pos2 - pos1 - 1);
+                std::string phone = line.substr(pos2 + 1);
+                records.push_back({id, name, phone});
+                if (id >= nextId) nextId = id + 1;
+            }
+        }
+        inFile.close();
+        std::cout << "Database loaded successfully.\n";
+    }
+
+    // PA0905: Search database by typing a name
+    void searchByName(std::string searchName) {
+        bool found = false;
+        for (const auto& r : records) {
+            if (r.name == searchName) {
+                std::cout << "Found -> ID: " << r.id << " | Name: " << r.name << "\n";
+                found = true;
+            }
+        }
+        if (!found) std::cout << "Person not found.\n";
+    }
+
+    // PA0906: Remove person by ID
+    void removeById(int id) {
+        auto it = std::remove_if(records.begin(), records.end(), [id](const DBRecord& r){ return r.id == id; });
+        if (it != records.end()) {
+            records.erase(it, records.end());
+            std::cout << "Record ID " << id << " removed.\n";
+        } else {
+            std::cout << "ID not found.\n";
+        }
+    }
+};
+
+
+// ==========================================
+// DEMONSTRATION RUNNERS
+// ==========================================
+
+void runSectionA() {
+    std::cout << "\n--- SECTION A: Structures and Classes ---\n";
+    // PA0101 & PA0102
+    PersonStruct team[2]; 
+    team[0].name = "Siyabonga"; team[0].age = 25;
+    team[1].name = "Josh";   team[1].age = 30;
+    std::cout << "Struct Array[0]: " << team[0].name << " is " << team[0].age << "\n";
+    
+    User u1("Admin");
+    User u2 = u1; // PA0105: Copy constructor
+    User u3; // PA0109: Delegated default
+    u1.showUserDetails();
+    u2.showUserDetails();
+    u3.showUserDetails();
+}
+
+void runSectionB() {
+    std::cout << "\n--- SECTION B: Overloaded Functions & Operators ---\n";
+    printMessage("Polymorphism Test"); // PA0201
+    printMessage(404);
+    
+    Point2D p1(1.5, 2.5);
+    Point2D p2(2.0, 3.0);
+    Point2D p3 = p1 + p2; // PA0202: Operator Overloading
+    
+    Point* basePtr = &p3;
+    basePtr->display(); // PA0203 & PA0204: Virtual and Override execution
+}
+
+void runSectionC() {
+    std::cout << "\n--- SECTION C: Templates ---\n";
+    std::cout << "Max of 10 and 20: " << getMaximum(10, 20) << "\n"; // PA0301
+    std::cout << "Max of 5.5 and 2.1: " << getMaximum(5.5, 2.1) << "\n";
+    
+    DataHolder<std::string> strHolder("Template String"); // PA0302
+    strHolder.show();
+}
+
+void runSectionD() {
+    std::cout << "\n--- SECTION D: Namespace Declaration ---\n";
+    // PA0402: Use directives
+    using namespace HCLSTools; 
+    printHeader(); // PA0401
+}
+
+void runSectionE() {
+    std::cout << "\n--- SECTION E: Vectors in STL ---\n";
+    // PA0501 & PA0503: Use and initialize vector
+    std::vector<int> numbers = {10, 20, 30, 40}; 
+    
+    // PA0502 & PA0504: Iterators and iterating
+    std::cout << "Vector contents using Iterator: ";
+    for(std::vector<int>::iterator it = numbers.begin(); it != numbers.end(); ++it) {
+        std::cout << *it << " ";
+    }
+    std::cout << "\n";
+    
+    // PA0505: Use loops to process elements
+    std::cout << "Processing (doubling) with range loop: ";
+    for(int& n : numbers) {
+        n *= 2;
+        std::cout << n << " ";
+    }
+    std::cout << "\n";
+}
+
+void runSectionF() {
+    std::cout << "\n--- SECTION F: Stacks in STL ---\n";
+    // PA0601: Implement stacks
+    std::stack<std::string> plates;
+    plates.push("Plate 1");
+    plates.push("Plate 2");
+    std::cout << "Top of stack: " << plates.top() << "\n";
+    plates.pop();
+    std::cout << "Top of stack after pop: " << plates.top() << "\n";
+}
+
+void runSectionG() {
+    std::cout << "\n--- SECTION G: Maps in STL ---\n";
+    // PA0701: Insert a map (instantiate)
+    std::map<int, std::string> directory;
+    
+    // PA0702: Insert elements
+    directory.insert({1, "Alpha"});
+    directory[2] = "Bravo";
+    
+    // PA0703: Search in a map
+    auto it = directory.find(2);
+    if(it != directory.end()) std::cout << "Found Key 2: " << it->second << "\n";
+    
+    // PA0704: Delete elements
+    directory.erase(1);
+    
+    // PA0705: Iterate over map
+    std::cout << "Map contents: ";
+    for(const auto& pair : directory) {
+        std::cout << "[" << pair.first << " : " << pair.second << "] ";
+    }
+    std::cout << "\n";
+}
+
+void runSectionH() {
+    std::cout << "\n--- SECTION H: Algorithms ---\n";
+    std::vector<int> data = {5, 2, 8, 2, 9, 1, 7, 3};
+    
+    // Non-modifying (PA0801)
+    int count_twos = std::count(data.begin(), data.end(), 2);
+    std::cout << "Count of 2s: " << count_twos << "\n";
+    
+    // Modifying
+    std::replace(data.begin(), data.end(), 2, 99);
+    
+    // Sorting & Binary Search
+    std::sort(data.begin(), data.end());
+    bool found = std::binary_search(data.begin(), data.end(), 8);
+    std::cout << "Is 8 in sorted data? " << (found ? "Yes" : "No") << "\n";
+    
+    // Min/Max
+    auto minmax = std::minmax_element(data.begin(), data.end());
+    std::cout << "Min: " << *minmax.first << " | Max: " << *minmax.second << "\n";
+    
+    // Heap
+    std::make_heap(data.begin(), data.end());
+    std::cout << "Heap root (max): " << data.front() << "\n";
+}
+
+void runSectionI() {
+    std::cout << "\n--- SECTION I: Mini Database ---\n";
+    MiniDatabase db;
+    
+    db.addPerson("Joshua Pascal", "+27670752611");
+    db.addPerson("Pascal Joshua", "0670752611");
+    db.showAll();
+    
+    db.saveToFile();
+    
+    std::cout << "\nSimulating system restart (clearing memory)...\n";
+    MiniDatabase db2;
+    db2.loadFromFile();
+    
+    std::cout << "\nSearching for 'Joshua Pascal':\n";
+    db2.searchByName("Joshua Pascal");
+    
+    std::cout << "\nRemoving ID 2 (Pascal)...\n";
+    db2.removeById(2);
+    db2.showAll();
+}
+
+// ==========================================
+// MAIN MENU (DRIVER)
+// ==========================================
+
+int main() {
+    int choice = 0;
+    while (choice != 10) {
+        std::cout << "\n============================================\n";
+        std::cout << "       HCLS C++ PRACTICAL MODULE (4)        \n";
+        std::cout << "============================================\n";
+        std::cout << "1. Section A: Structures and classes\n";
+        std::cout << "2. Section B: Overloaded function/operator\n";
+        std::cout << "3. Section C: Create templates\n";
+        std::cout << "4. Section D: Namespace declaration\n";
+        std::cout << "5. Section E: Vectors in STL\n";
+        std::cout << "6. Section F: Implement stacks in STL\n";
+        std::cout << "7. Section G: Create a map in C++ STL\n";
+        std::cout << "8. Section H: Algorithms\n";
+        std::cout << "9. Section I: Create a mini database\n";
+        std::cout << "10. Exit\n";
+        std::cout << "Select a module to demonstrate (1-10): ";
+        
+        std::cin >> choice;
+        
+        switch (choice) {
+            case 1: runSectionA(); break;
+            case 2: runSectionB(); break;
+            case 3: runSectionC(); break;
+            case 4: runSectionD(); break;
+            case 5: runSectionE(); break;
+            case 6: runSectionF(); break;
+            case 7: runSectionG(); break;
+            case 8: runSectionH(); break;
+            case 9: runSectionI(); break;
+            case 10: std::cout << "\nExiting application...\n"; break;
+            default: std::cout << "Invalid choice. Please try again.\n";
+        }
+    }
+    return 0;
+}
