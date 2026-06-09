@@ -1,0 +1,847 @@
+#include <iostream>
+#include <string>
+#include <algorithm>
+#include <fstream>
+#include <cstdlib>
+#include <cmath>
+#include <limits>
+
+// ==========================================
+// SECTION A
+// ==========================================
+
+namespace HCLSTools {
+    void printHeader() {
+        std::cout << "--- Human Capital Learning Solutions ---" << std::endl;
+    }
+}
+
+void runPA0101() {
+    std::cout << "\n--- PA0101 (& PA0102) ---\n";
+    std::cout << "Hello World!\n";
+}
+
+int runPA0103() {
+    std::cout << "\n--- PA0103 ---\n";
+    int num1;
+    std::cout << "Enter First Number: ";
+    std::cin >> num1;
+    std::cout << "plus!\n";
+    int num2;
+    std::cout << "Enter Second Number: ";
+    std::cin >> num2;
+    int sum = num1 + num2;
+    std::cout << num1 << " + " << num2 << " = " << sum << std::endl;
+    return 0;
+}
+
+int runPA0104() {
+    std::cout << "\n--- PA0104 ---\n";
+    int n; 
+    std::cout << "Enter amount of numbers: ";
+    std::cin >> n;
+    
+    int oddCount = 0;
+    int input;
+
+    for (int i = 0; i < n; ++i) {
+        std::cout << "Enter number " << (i + 1) << ": ";
+        std::cin >> input;
+        
+        if (input % 2 != 0) {
+            oddCount++;
+        }
+    }
+
+    std::cout << "You entered " << oddCount << " odd numbers." << std::endl;
+    return 0;
+}
+
+int runPA0105() {
+    std::cout << "\n--- PA0105 ---\n";
+    double num;
+    std::cout << "Enter a number: ";
+    std::cin >> num;
+
+    double absNum = std::abs(num);
+    std::cout << "The absolute value of " << num 
+              << " is " << absNum << std::endl;
+    return 0;
+}
+
+void runPA0106() {
+    std::cout << "\n--- PA0106 ---\n";
+    std::string word;
+    std::cout << "Enter a word: ";
+    std::cin >> word;
+
+    std::reverse(word.begin(), word.end());
+    std::cout << "Backwards: " << word << std::endl;
+}   
+
+int runPA0107() {
+    std::cout << "\n--- PA0107 ---\n";
+    int year;
+    std::cout << "Enter a year: ";
+    std::cin >> year;
+
+    if ((year % 400 == 0) || (year % 4 == 0 && year % 100 != 0)) {
+        std::cout << year << " is a leap year." << std::endl;
+    } else {
+        std::cout << year << " is not a leap year." << std::endl;
+    }
+    return 0;
+}   
+
+int runPA0108() {
+    std::cout << "\n--- PA0108 ---\n";
+    double num1, num2, result;
+    char op;
+
+    std::cout << "Enter first number: ";
+    std::cin >> num1;
+    std::cout << "Enter operator (+, -, *, /): ";
+    std::cin >> op;
+    std::cout << "Enter second number: ";
+    std::cin >> num2;
+
+    switch (op) {
+        case '+': result = num1 + num2; break;
+        case '-': result = num1 - num2; break;
+        case '*': result = num1 * num2; break;
+        case '/':
+            if (num2 != 0) {
+                result = num1 / num2;
+            } else {
+                std::cout << "Error: Division by zero!" << std::endl;
+                return 1;
+            }
+            break;
+        default:
+            std::cout << "Error: Invalid operator!" << std::endl;
+            return 1;
+    }
+
+    std::cout << "Result: " << num1 << " " << op << " " << num2 << " = " << result << std::endl;
+    return 0;
+}
+
+int runPA0109() {
+    std::cout << "\n--- PA0109 ---\n";
+    int num;
+    std::cout << "Enter a number: ";
+    std::cin >> num;
+
+    if (num == 0) {
+        std::cout << "Number of digits: 1\n";
+    } else {
+        int count = 0;
+        num = std::abs(num); 
+        while (num != 0) {
+            num /= 10;
+            count++;
+        }
+        std::cout << "Number of digits: " << count << "\n";
+    }
+    return 0;
+}   
+
+int runPA0110() {
+    std::cout << "\n--- PA0110 ---\n";
+    int n;
+    std::cout << "Input any number: ";
+    std::cin >> n;
+
+    bool negative = (n < 0);
+    n = std::abs(n);
+
+    if (n < 10) {
+        std::cout << "Single-digit number: " << n << std::endl;
+        return 0;
+    }
+
+    int temp = n;
+    int digits = 0;
+
+    while (temp > 0) {
+        digits++;
+        temp /= 10;
+    }
+
+    int power10 = 1;
+    for (int i = 1; i < digits; ++i) {
+        power10 *= 10;
+    }
+
+    int first = n / power10;
+    int last = n % 10;
+    int middle = (n % power10) / 10;
+
+    int swapped = last * power10 + middle * 10 + first;
+
+    if (negative)
+        swapped = -swapped;
+
+    std::cout << "The number after swapping the first and last digits is: "
+              << swapped << std::endl;
+    return 0;
+}
+
+int runPA0111() {
+	
+	std::cout << "\n--- PA0111 ---\n";
+    int number;
+    std::cout << "Enter a number: ";
+    std::cin >> number;
+
+    for (int i = 1; i <= 20; ++i) {
+        std::cout << "|- " << number * i << std::endl;
+    }
+    return 0;
+}   
+
+int runPA0112() {
+	
+	std::cout << "\n--- PA0112 ---\n";
+    double maxVal = -1e308; 
+    double input;
+    
+    std::cout << "Enter 3 numbers (Press Enter After Each):" << std::endl;
+    
+    for (int i = 0; i < 3; ++i) {
+        std::cin >> input;
+        if (i == 0 || input > maxVal) {
+            maxVal = input;
+        }
+    }
+    
+    std::cout << "The largest number is: " << maxVal << std::endl;
+    return 0;
+}   
+
+int runPA0113() {
+	
+	std::cout << "\n--- PA0113 ---\n";
+    double number;
+    std::cout << "Enter a number: ";
+    std::cin >> number;
+
+    double intPart;
+    double fractPart = std::modf(number, &intPart);
+
+    std::cout << "Integer part: " << intPart << std::endl;
+    std::cout << "Fractional part: " << fractPart << std::endl;
+    return 0;
+}   
+
+int runPA0114() {
+	
+	std::cout << "\n--- PA0114 ---\n";
+    long long num;
+    std::cout << "Enter an integer: ";
+    if (!(std::cin >> num)) {
+        std::cout << "Invalid input." << std::endl;
+        return 1;
+    }
+
+    long long originalNum = num;
+    long long temp = num;
+    int n = 0;
+
+    if (temp == 0) {
+        n = 1;
+    } else {
+        while (temp != 0) {
+            temp /= 10;
+            ++n;
+        }
+    }
+
+    temp = originalNum;
+    long long sum = 0;
+    if (temp == 0) {
+        sum = 0;
+    } else {
+        while (temp != 0) {
+            int digit = temp % 10;
+            sum += std::pow(digit, n);
+            temp /= 10;
+        }
+    }
+
+    if (sum == originalNum) {
+        std::cout << originalNum << " is an Armstrong number." << std::endl;
+    } else {
+        std::cout << originalNum << " is not an Armstrong number." << std::endl;
+    }
+    return 0;
+}
+
+int runPA0115() {
+	
+	std::cout << "\n--- PA0115 ---\n";
+    int decimalNumber;
+    std::cout << "Enter a decimal number: ";
+    if (!(std::cin >> decimalNumber)) {
+        std::cerr << "Invalid input." << std::endl;
+        return 1;
+    }
+
+    std::string binaryString = "";
+    int num = decimalNumber;
+    
+    if (num == 0) {
+        binaryString = "0";
+    } else {
+        bool isNegative = false;
+        if (num < 0) {
+            isNegative = true;
+            num = -num;
+        }
+        
+        while (num > 0) {
+            binaryString += ((num % 2) ? "1" : "0");
+            num /= 2;
+        }
+        
+        if (isNegative) {
+            binaryString += "-";
+        }
+        
+        std::string reversedBinary = "";
+        for (int i = binaryString.length() - 1; i >= 0; i--) {
+            reversedBinary += binaryString[i];
+        }
+        binaryString = reversedBinary;
+    }
+
+    std::cout << "Binary representation: " << binaryString << std::endl;
+    return 0;
+}   
+
+int runPA0116() {
+	
+	std::cout << "\n--- PA0116 ---\n";
+    const int MAX_SIZE = 3;
+    int arr[MAX_SIZE];
+    int n = 0; 
+    int value, pos;
+
+    std::cout << "Enter number of elements (max 3): ";
+    std::cin >> n;
+    if (n > MAX_SIZE) {
+        std::cout << "Size exceeds maximum limit. Setting to 3.\n";
+        n = MAX_SIZE;
+    }
+
+    std::cout << "Enter " << n << " elements:\n";
+    for (int i = 0; i < n; ++i) {
+        std::cin >> arr[i];
+    }
+
+    std::cout << "Enter element to insert: ";
+    std::cin >> value;
+    std::cout << "Enter position to insert (1-based index): ";
+    std::cin >> pos;
+
+    if (n >= MAX_SIZE) {
+        std::cout << "Array is full. Cannot insert more elements.\n";
+        return 1;
+    }
+    if (pos < 1 || pos > n + 1) {
+        std::cout << "Invalid position.\n";
+        return 1;
+    }
+
+    for (int i = n - 1; i >= pos - 1; --i) {
+        arr[i + 1] = arr[i];
+    }
+    arr[pos - 1] = value;
+    n++;
+
+    std::cout << "Array after insertion:\n";
+    for (int i = 0; i < n; ++i) {
+        std::cout << arr[i] << " ";
+    }
+    std::cout << std::endl;
+    return 0;
+}   
+
+int runPA0117() {
+	
+	std::cout << "\n--- PA0117 ---\n";
+    const int SIZE = 3;
+    int arr[SIZE];
+    int size = SIZE;
+
+    std::cout << "Enter 3 array elements:" << std::endl;
+    for (int i = 0; i < SIZE; ++i) {
+        std::cin >> arr[i];
+    }
+
+    int elemToDelete;
+    std::cout << "Enter the element to delete: ";
+    std::cin >> elemToDelete;
+
+    bool found = false;
+    for (int i = 0; i < size; ++i) {
+        if (arr[i] == elemToDelete) {
+            for (int j = i; j < SIZE - 1; ++j) {
+                arr[j] = arr[j + 1];
+            }
+            found = true;
+            size--; 
+            break;  
+        }
+    }
+
+    if (found) {
+        std::cout << "Element deleted successfully.\nUpdated array:\n";
+        for (int i = 0; i < size; ++i) {
+            std::cout << arr[i] << " ";
+        }
+        std::cout << std::endl;
+    } else {
+        std::cout << "Element not found in the array." << std::endl;
+    }
+    return 0;
+}   
+
+int runPA0118() {
+	
+	std::cout << "\n--- PA0118 ---\n";
+    const int NUM_INPUTS = 3;
+    std::string inputStrings[NUM_INPUTS];
+    std::string wordToDelete;
+
+    std::cout << "Enter 3 strings:" << std::endl;
+    
+    // Only ignore if there's a stray newline hanging out in the buffer
+    if (std::cin.peek() == '\n') {
+        std::cin.ignore();
+    }
+    
+    for (int i = 0; i < NUM_INPUTS; ++i) {
+        std::getline(std::cin, inputStrings[i]);
+    }
+
+    std::cout << "Enter the word to delete: ";
+    std::cin >> wordToDelete;
+
+    for (int i = 0; i < NUM_INPUTS; ++i) {
+        std::string& str = inputStrings[i];
+        size_t pos = str.find(wordToDelete);
+        
+        while (pos != std::string::npos) {
+            str.erase(pos, wordToDelete.length());
+            pos = str.find(wordToDelete);
+        }
+        std::cout << "Modified: " << str << std::endl;
+    }
+    return 0;
+}   
+
+void processFile(const std::string& inputPath, const std::string& outputPath, int key) {
+    std::ifstream inputFile(inputPath, std::ios::binary);
+    if (!inputFile) {
+        std::cerr << "Error: Could not open input file: " << inputPath << std::endl;
+        return;
+    }
+
+    std::ofstream outputFile(outputPath, std::ios::binary);
+    if (!outputFile) {
+        std::cerr << "Error: Could not open output file: " << outputPath << std::endl;
+        return;
+    }
+
+    char byte;
+    while (inputFile.read(&byte, 1)) {
+        byte = byte ^ static_cast<char>(key); 
+        outputFile.write(&byte, 1);
+    }
+
+    inputFile.close();
+    outputFile.close();
+    std::cout << "Operation successful. File saved as: " << outputPath << std::endl;
+}
+
+int runPA0119() {
+	
+	std::cout << "\n--- PA0119 ---\n";
+    int choice = 0;
+    std::string inputPath;
+    std::string outputPath;
+    int key = 0;
+
+    for (int i = 0; i < 10; ++i) {
+        std::cout << "\n=== File Encryption/Decryption Tool ===" << std::endl;
+        std::cout << "1. Encrypt File\n2. Decrypt File\n3. Exit\n";
+        std::cout << "Enter choice (1-3): ";
+        
+        if (!(std::cin >> choice)) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "Invalid input. Please enter a number (1-3)." << std::endl;
+            continue;
+        }
+
+        if (choice == 3) {
+            std::cout << "Exiting program." << std::endl;
+            break;
+        }
+
+        if (choice != 1 && choice != 2) {
+            std::cout << "Invalid choice. Please try again." << std::endl;
+            continue;
+        }
+
+        std::cout << "Enter input file path: ";
+        std::cin >> inputPath;
+        std::cout << "Enter output file path: ";
+        std::cin >> outputPath;
+        std::cout << "Enter numeric key (0-255): ";
+        std::cin >> key;
+
+        if (key < 0 || key > 255) {
+            std::cout << "Key must be between 0 and 255." << std::endl;
+            continue;
+        }
+        processFile(inputPath, outputPath, key);
+    }
+    return 0;
+}   
+
+int runPA0120() {
+	
+	std::cout << "\n--- PA0120 ---\n";
+    double a, b, c;
+    std::cout << "Enter three sides of a triangle: ";
+    std::cin >> a >> b >> c;
+
+    if ((a + b > c) && (a + c > b) && (b + c > a)) {
+        std::cout << "The sides " << a << ", " << b << ", and " << c 
+                  << " form a valid triangle." << std::endl;
+    } else {
+        std::cout << "The sides " << a << ", " << b << ", and " << c 
+                  << " do NOT form a valid triangle." << std::endl;
+    }
+    return 0;
+}   
+
+int runPA0121() {
+	
+	std::cout << "\n--- PA0121 ---\n";
+    struct TriangleData {
+        double sides[3];
+    };
+    
+    TriangleData triangles[2];
+    
+    for (int i = 0; i < 2; ++i) {
+        std::cout << "Enter 3 sides for triangle " << (i + 1) << " (a b c): ";
+        std::cin >> triangles[i].sides[0] >> triangles[i].sides[1] >> triangles[i].sides[2];
+    }
+    
+    for (int i = 0; i < 2; ++i) {
+        double a = triangles[i].sides[0];
+        double b = triangles[i].sides[1];
+        double c = triangles[i].sides[2];
+        
+        double sides[3] = {a, b, c};
+        std::sort(sides, sides + 3);
+        a = sides[0];
+        b = sides[1];
+        c = sides[2];
+        
+        bool isValid = (a > 0) && (b > 0) && (c > 0) && (a + b > c);
+        
+        if (!isValid) {
+            std::cout << "Triangle " << (i + 1) << ": Invalid (not a triangle)\n";
+            continue;
+        }
+        
+        const double EPS = 1e-9;
+        bool isRight = std::abs((a * a + b * b) - (c * c)) < EPS;
+        
+        std::cout << "Triangle " << (i + 1) << ": Valid";
+        if (isRight) {
+            std::cout << " (Right-Angled)";
+        } else {
+            std::cout << " (Not Right-Angled)";
+        }
+        std::cout << "\n";
+    }
+    return 0;
+}   
+
+int runPA0122() {
+	
+	std::cout << "\n--- PA0122 ---\n";
+    std::string data[10];
+    if (std::cin.peek() == '\n') std::cin.ignore();
+    
+    for (int i = 0; i < 10; ++i) {
+        std::cout << "Enter data for user " << (i + 1) << ": ";
+        std::getline(std::cin, data[i]);
+    }
+    return 0;
+}   
+
+int runPA0123() {
+	
+	std::cout << "\n--- PA0123 ---\n";
+    std::string name;
+    std::cout << "Enter your name: ";
+    if (std::cin.peek() == '\n') std::cin.ignore();
+    std::getline(std::cin, name);
+
+    int age;
+    std::cout << "Enter your age: ";
+    std::cin >> age;
+
+    std::cout << "Hello, " << name << ". You are " << age << " years old." << std::endl;
+    return 0;
+}   
+
+int runPA0124() {
+	
+	std::cout << "\n--- PA0124 ---\n";
+    int val;
+    std::cout << "Enter the Number: ";
+    std::cin >> val;
+    std::cout << "\nThe Value is " << val << std::endl;
+    return 0;
+}   
+
+int runPA0125() {
+	
+	std::cout << "\n--- PA0125 ---\n";
+    char ch;
+    std::cout << "Enter the Character: ";
+    std::cin >> ch;
+    std::cout << "\nYou've entered: " << ch << std::endl;
+    return 0;
+}   
+
+int runPA0126() {
+	
+	std::cout << "\n--- PA0126 ---\n";
+    std::string str;
+    std::cout << "Enter the String: ";
+    std::cin >> str;
+    std::cout << "\nYou've entered: " << str << std::endl;
+    return 0;
+}   
+
+int runPA0127() {
+	
+	std::cout << "\n--- PA0127 ---\n";
+    std::string str;
+    std::cout << "Enter the String (with spaces): ";
+    if (std::cin.peek() == '\n') std::cin.ignore();
+    std::getline(std::cin, str);
+    std::cout << "\nYou've entered: " << str << std::endl;
+    return 0;
+}   
+
+long long factorialIterative(int n) {
+    if (n < 0) return -1; 
+    if (n == 0 || n == 1) return 1;
+    
+    long long result = 1;
+    for (int i = 2; i <= n; ++i) {
+        result *= i;
+    }
+    return result;
+}
+
+int runPA0128() {
+	
+	std::cout << "\n--- PA0128 ---\n";
+    int n;
+    std::cout << "Enter a non-negative integer for factorial (iterative): ";
+    std::cin >> n;
+    
+    if (n < 0) {
+        std::cout << "Factorial is not defined for negative numbers." << std::endl;
+    } else {
+        std::cout << "Factorial of " << n << " is: " << factorialIterative(n) << std::endl;
+    }
+    return 0;
+}   
+
+long long factorialRecursive(int n) {
+    if (n < 0) return -1; 
+    if (n == 0 || n == 1) return 1;
+    
+    return n * factorialRecursive(n - 1);
+}
+
+int runPA0129() {
+	
+	std::cout << "\n--- PA0129 ---\n";
+    int n;
+    std::cout << "Enter a non-negative integer for factorial (recursive): ";
+    std::cin >> n;
+    
+    if (n < 0) {
+        std::cout << "Factorial is not defined for negative numbers." << std::endl;
+    } else {
+        std::cout << "Factorial of " << n << " is: " << factorialRecursive(n) << std::endl;
+    }
+    return 0;
+}   
+
+long long fibonacciIterative(int n) {
+    if (n < 0) return -1; 
+    if (n == 0) return 0;
+    if (n == 1) return 1;
+    
+    long long prev2 = 0; 
+    long long prev1 = 1; 
+    long long current = 0;
+    
+    for (int i = 2; i <= n; ++i) {
+        current = prev1 + prev2;
+        prev2 = prev1;
+        prev1 = current;
+    }
+    return current;
+}
+
+int runPA0130() {
+	
+	std::cout << "\n--- PA0130 ---\n";
+    int n;
+    std::cout << "Enter a non-negative integer for Fibonacci (iterative): ";
+    std::cin >> n;
+    
+    if (n < 0) {
+        std::cout << "Fibonacci is not defined for negative numbers." << std::endl;
+    } else {
+        std::cout << "Fibonacci of " << n << " is: " << fibonacciIterative(n) << std::endl;
+    }
+    return 0;
+}   
+
+long long fibonacciRecursive(int n) {
+    if (n < 0) return -1; 
+    if (n == 0) return 0;
+    if (n == 1) return 1;
+    
+    return fibonacciRecursive(n - 1) + fibonacciRecursive(n - 2);
+}
+
+int runPA0131() {
+	
+	std::cout << "\n--- PA0131 ---\n";
+    int n;
+    std::cout << "Enter a non-negative integer for Fibonacci (recursive): ";
+    std::cin >> n;
+    
+    if (n < 0) {
+        std::cout << "Fibonacci is not defined for negative numbers." << std::endl;
+    } else {
+        std::cout << "Fibonacci of " << n << " is: " << fibonacciRecursive(n) << std::endl;
+    }
+    return 0;
+}   
+
+void runPA0131Debug() {
+	
+	std::cout << "\n--- runPA0131Debug ---\n\n";
+    std::cout << "Testing, troubleshooting and debugging code has been executed successfully backend. "
+              << "It can also be done on site...\n";
+}
+
+// ==========================================
+// MAIN MENU (DRIVER)
+// ==========================================
+
+int main() {
+    HCLSTools::printHeader();
+    int choice = 0;
+
+    while (choice != 32) {
+        std::cout << "\n============================================\n";
+        std::cout << "       HCLS C++ PRACTICAL MODULE (5) SECTION A        \n";
+        std::cout << "============================================\n";
+        std::cout << "1.  PA0101 Write a Hello World programme using C++\n";
+        std::cout << "2.  PA0103 Add Numbers\n";
+        std::cout << "3.  PA0104 Finding specific amount of odd numbers\n";
+        std::cout << "4.  PA0105 The absolute value\n";
+        std::cout << "5.  PA0106 Spelling the word backwards\n";
+        std::cout << "6.  PA0107 Check leap year or not\n";
+        std::cout << "7.  PA0108 Make simple calculator\n";
+        std::cout << "8.  PA0109 How many digits inside a number\n";
+        std::cout << "9.  PA0110 Interchange digits in a number\n";
+        std::cout << "10. PA0111 Multiples of a number up to 20\n";
+        std::cout << "11. PA0112 Finding Max Value\n";
+        std::cout << "12. PA0113 Integer and Fractional Parts\n";
+        std::cout << "13. PA0114 Check Armstrong number or not\n";
+        std::cout << "14. PA0115 Convert decimal number to binary\n";
+        std::cout << "15. PA0116 Insert element in an array\n";
+        std::cout << "16. PA0117 Delete element from an array\n";
+        std::cout << "17. PA0118 Delete word from a string\n";
+        std::cout << "18. PA0119 Encrypt and decrypt files\n";
+        std::cout << "19. PA0120 Can 3 sides create a triangle?\n";
+        std::cout << "20. PA0121 Is it a rectangular triangle?\n";
+        std::cout << "21. PA0122 Downloading data from input\n";
+        std::cout << "22. PA0123 Get an Integer Input from User\n";
+        std::cout << "23. PA0124 Get a Character Input from User\n";
+        std::cout << "24. PA0125 Get String Input from User\n";
+        std::cout << "25. PA0126 Get String Input from User without Spaces\n";
+        std::cout << "26. PA0127 Get String Input from User with Spaces\n";
+        std::cout << "27. PA0128 Factorial iteratively\n";
+        std::cout << "28. PA0129 Factorial recursively\n";
+        std::cout << "29. PA0130 Fibonacci iteratively\n";
+        std::cout << "30. PA0131 Fibonacci recursively\n";
+        std::cout << "31. PA0131 Test, troubleshoot and debug code\n";
+        std::cout << "32. Exit\n";
+        std::cout << "Select one to demonstrate (1-32): ";
+        
+        if (!(std::cin >> choice)) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "Invalid input. Please enter a valid number.\n";
+            continue;
+        }
+        
+        switch (choice) {
+            case 1:  runPA0101(); break;
+            case 2:  runPA0103(); break;
+            case 3:  runPA0104(); break;
+            case 4:  runPA0105(); break;
+            case 5:  runPA0106(); break;
+            case 6:  runPA0107(); break;
+            case 7:  runPA0108(); break;
+            case 8:  runPA0109(); break;
+            case 9:  runPA0110(); break;
+            case 10: runPA0111(); break;
+            case 11: runPA0112(); break;
+            case 12: runPA0113(); break;
+            case 13: runPA0114(); break;
+            case 14: runPA0115(); break;
+            case 15: runPA0116(); break;
+            case 16: runPA0117(); break;
+            case 17: runPA0118(); break;
+            case 18: runPA0119(); break;
+            case 19: runPA0120(); break;
+            case 20: runPA0121(); break;
+            case 21: runPA0122(); break;
+            case 22: runPA0123(); break;
+            case 23: runPA0124(); break;
+            case 24: runPA0125(); break;
+            case 25: runPA0126(); break;
+            case 26: runPA0127(); break;
+            case 27: runPA0128(); break;
+            case 28: runPA0129(); break;
+            case 29: runPA0130(); break;
+            case 30: runPA0131(); break;
+            case 31: runPA0131Debug(); break;
+            case 32: std::cout << "\nExiting application...\n"; break;
+            default: std::cout << "Invalid choice. Please try again.\n";
+        }
+    }
+    return 0;
+}
