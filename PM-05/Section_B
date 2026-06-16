@@ -1,0 +1,367 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <ctime>
+#include <cstdlib>
+#include <chrono>
+#include <random>
+
+using namespace std;
+using namespace std::chrono;
+
+struct Word {
+	string word;
+	string hint;
+};
+
+vector<Word> easyWords = {
+	
+{"apple", "A common round fruit"},
+{"book", "You read it"},
+{"dog", "A common pet that barks"},
+{"cat", "A common pet that meows"},
+{"sun", "The bright yellow star in the sky during the day"},
+{"moon", "The large white object in the night sky"},
+{"water", "The clear liquid you drink when you are thirsty"},
+{"fire", "The hot, bright flames used to keep warm or cook"},
+{"tree", "A tall plant with a wooden trunk and leaves"},
+{"car", "A vehicle with four wheels that you drive on the road"},
+{"house", "A building where a family lives"},
+{"bed", "The piece of furniture you sleep on"},
+{"chair", "A piece of furniture you sit on"},
+{"table", "A piece of furniture with a flat top and four legs"},
+{"book", "A set of pages with words that you read"},
+{"pen", "A tool you use to write with ink"},
+{"pencil", "A tool you use to write or draw that can be erased"},
+{"shoe", "What you wear on your foot before going outside"},
+{"hat", "What you wear on your head to block the sun"},
+{"shirt", "A piece of clothing you wear on your top half"},
+{"pants", "A piece of clothing you wear on your bottom half"},
+{"sock", "A soft piece of clothing you wear under your shoe"},
+{"bird", "An animal with feathers and wings that can fly"},
+{"fish", "An animal that swims in the water and has scales"},
+{"cow", "A large farm animal that gives us milk"},
+{"pig", "A pink farm animal with a curly tail"},
+{"horse", "A large animal you can ride with a saddle"},
+{"milk", "A white drink that comes from a cow"},
+{"bread", "A baked food made from flour that you use to make sandwiches"},
+{"cheese", "A yellow or white food made from milk, often put on pizza"},
+{"egg", "An oval object laid by a chicken that you can eat"},
+{"apple", "A red or green fruit that keeps the doctor away"},
+{"banana", "A long yellow fruit that monkeys love"},
+{"orange", "A round, citrus fruit of the same name as its color"},
+{"door", "What you open to go into a room"},
+{"window", "A glass opening in a wall that lets light in"},
+{"wall", "The solid side of a room or building"},
+{"floor", "The part of a room you walk on"},
+{"roof", "The top cover of a house"},
+{"star", "A tiny bright light in the night sky"},
+{"cloud", "A white fluffy shape in the sky made of water drops"},
+{"rain", "Water that falls from the sky"},
+{"snow", "Cold white flakes that fall from the sky in winter"},
+{"wind", "Moving air that you can feel outside"},
+{"ice", "Frozen, hard water"},
+{"baby", "A very young child"},
+{"boy", "A young male child"},
+{"girl", "A young female child"},
+{"mother", "A female parent"},
+{"father", "A male parent"},
+{"school", "A place where children go to learn"},
+{"teacher", "A person whose job is to help you learn"},
+{"doctor", "A person you go to see when you are sick"},
+{"hospital", "A place where sick people get medicine and help"},
+{"park", "A place with grass and playgrounds where you can play outside"},
+{"zoo", "A place where you can go to see wild animals"},
+{"farm", "A place where crops are grown and animals are kept"},
+{"road", "A paved path where cars drive"},
+{"train", "A long vehicle that travels on tracks"},
+{"plane", "A machine with wings that flies in the sky"},
+{"boat", "A vehicle that floats and travels on water"},
+{"bicycle", "A two-wheeled vehicle you pedal with your feet"},
+{"ball", "A round toy you can throw, catch, or kick"},
+{"doll", "A toy that looks like a baby or a person"},
+{"game", "An activity you play for fun, often with rules"},
+{"clock", "A device that tells you the time"},
+{"phone", "A device you use to call and talk to someone far away"},
+{"computer", "A machine with a screen and keyboard used for work or games"},
+{"television", "A large screen you watch movies and shows on"},
+{"music", "Sounds made by singing or playing instruments"},
+{"song", "A piece of music with words that you sing"},
+{"dance", "Moving your body to the rhythm of music"},
+{"picture", "A drawing or photograph you can look at"},
+{"color", "Red, blue, green, and yellow are examples of this"},
+{"shape", "A circle, square, or triangle is an example of this"},
+{"number", "One, two, and three are examples of this"},
+{"word", "Letters put together to mean something"},
+{"letter", "A, B, and C are examples of this"},
+{"hand", "The body part at the end of your arm with five fingers"},
+{"foot", "The body part at the end of your leg with five toes"},
+{"face", "The front of your head with your eyes, nose, and mouth"},
+{"eye", "The part of your face you use to see"},
+{"pap", "A stiff porridge made from maize meal"},
+{"braai", "A barbecue where meat is cooked over an open fire"},
+{"biltong", "Dried, salty meat that you eat as a snack"},
+{"boerewors", "A traditional thick South African sausage"},
+{"bakkie", "A pickup truck with an open back for carrying things"},
+{"robot", "What is Africans call a traffic light"},
+{"lekker", "A slang word meaning nice, good, or tasty"},
+{"muti", "Traditional medicine"},
+{"sangoma", "A traditional healer"},
+{"gogo", "A Zulu word for a grandmother or elderly woman"},
+{"tekkies", "Running shoes or sneakers"},
+{"kota", "A very large submarine sandwich filled with chips and stuff"},
+{"bunnychow", "A hollowed-out loaf of bread filled with curry"},
+{"vuvuzela", "A long plastic horn blown loudly at soccer matches"},
+{"ubuntu", "The African idea of humanity and caring for others"},
+{"spaza", "A small informal shop, often found in a township"},
+{"kraal", "A traditional fence or enclosure for keeping farm animals"},
+{"ekse", "A casual South African greeting meaning hello"}
+
+};
+
+vector<Word>hardWords = {
+	
+{"encyclopedia", "An online library of knowledge"},
+{"philosophy", "Study of fundamental truths"},
+{"hangover", "The physical regret you feel the morning after drinking too much"},
+{"mortgage", "A massive loan you spend half your life paying off just to own a home"},
+{"alimony", "Money you are legally forced to pay your ex-spouse after a divorce"},
+{"nepotism", "Getting a high-paying job purely because your family owns the company"},
+{"libido", "Your biological drive and desire for sexual intimacy"},
+{"aphrodisiac", "A food or drug that supposedly makes you feel turned on"},
+{"bureaucracy", "Endless paperwork and red tape that prevents anything from getting done"},
+{"insomnia", "Staring at the ceiling at 3 AM unable to shut your brain off"},
+{"flirting", "Playfully signaling to someone that you find them attractive"},
+{"prenup", "A legal contract signed before marriage to protect your money if you divorce"},
+{"contraception", "Various methods and devices used to avoid an unwanted pregnancy"},
+{"fetish", "A specific and often unusual sexual obsession or turn-on"},
+{"narcissist", "Someone intensely arrogant who only cares about themselves and their image"},
+{"infidelity", "Cheating on your romantic partner with someone else"},
+{"commute", "The soul-crushing daily drive in traffic to and from your workplace"},
+{"tax", "The mandatory cut of your salary that goes straight to the government"},
+{"procrastination", "Delaying important work until the very last panic-inducing minute"},
+{"eavesdrop", "Secretly listening in on someone else's private conversation"},
+{"bribery", "Illegally paying someone off to look the other way or grant a favor"},
+{"swinger", "A person in a committed relationship who consensually swaps partners for fun"},
+{"blackmail", "Threatening to reveal someone's dirty secrets unless they pay up"},
+{"escort", "A professional hired to accompany someone, often for intimate purposes"},
+{"plagiarism", "Stealing someone else's work or ideas and claiming them as your own"},
+{"cynic", "A person who believes everyone is purely motivated by selfishness"},
+{"ultimatum", "A final demand backed by a threat, like 'marry me or we break up'"},
+{"celibate", "Voluntarily abstaining from sex and romantic relationships"},
+{"hypocrite", "Someone who preaches moral behavior but secretly does the exact opposite"},
+{"midlife", "The crisis period around age forty when people suddenly buy sports cars"},
+{"cleavage", "The visible space between a woman's breasts in a low-cut shirt"},
+{"mansplain", "When a man condescendingly explains something to a woman who already knows it"},
+{"gaslight", "Manipulating someone into doubting their own memory and sanity"},
+{"gossip", "Juicy but often unverified rumors spread about other people's private lives"},
+{"voyeur", "Someone who gets a thrill from secretly watching others undress or be intimate"},
+{"schadenfreude", "The guilty pleasure of enjoying someone else's misfortune"},
+{"platonic", "A strictly friendly relationship with absolutely zero romantic tension"},
+{"booty", "Slang for a woman's ass (usually big ones)"},
+{"caffeine", "The addictive chemical in coffee that keeps tired adults functioning"},
+{"sabotage", "Deliberately ruining someone else's plans or work out of spite"},
+{"kink", "A quirky or unconventional bedroom preference"},
+{"monogamy", "The practice of having only one romantic or sexual partner at a time"},
+{"cholesterol", "The fatty substance in your blood that makes adults avoid eating too much cheese"},
+{"therapy", "Paying a professional to listen to your childhood trauma and emotional baggage"},
+{"ghosting", "Ending a relationship by abruptly ignoring all of their texts and calls"},
+{"catfish", "Creating a fake online dating profile to trick someone into a relationship"},
+{"sugar daddy", "A 'daddy' who provides money and gifts to a younger romantic partner"},
+{"puberty", "The awkward hormonal phase that transforms children into moody teens"},
+{"condom", "A widely used latex barrier method to practice safe intimacy"},
+{"hustle", "Working relentlessly to make extra cash, by any means"},
+{"inflation", "The frustrating economic reality of everything getting more expensive every year"},
+{"menopause", "The biological stage when a woman stops getting her monthly cycle"},
+{"vasectomy", "A minor surgical procedure to permanently prevent a man from fathering children"},
+{"seduction", "Persuading someone into a romantic or sexual encounter with charm"},
+{"freeloader", "A lazy person who lives off the generosity and money of others"},
+{"wingman", "A supportive friend who helps you smoothly approach someone you want to date"},
+{"hangry", "The irrational anger and irritation caused solely by an empty stomach"},
+{"plumber", "The tradesperson whose cliché involves showing a bit of a ass crack while working"},
+{"hickey", "A dark bruise on the neck left by passionate kissing"},
+{"lingerie", "Sensual and visually appealing underwear worn by woman to entice a man/husband"},
+{"taboo", "A subject or behavior considered socially unacceptable to talk about or do"},
+{"stripper", "An entertainer who gets paid to remove their clothes at adult clubs and 'strip'"},
+{"gullible", "Easily tricked into believing things, like thinking this word isn't in the dictionary"},
+{"pension", "The retirement fund you pray will be enough to live on when you are old"},
+{"intimacy", "Deep emotional or physical closeness between two partners"},
+{"smuggle", "To secretly and illegally transport contraband across a border"},
+{"paparazzi", "Aggressive photographers who stalk celebrities for intrusive pictures"},
+{"toddler", "A tiny, irrational human whose tantrums test an adult's sanity"},
+{"marijuana", "The green plant adults smoke or eat to get high and relaxed (sometimes called weed)"},
+{"gambling", "Risking your hard-earned cash at a casino hoping to win big"},
+{"vulgar", "Language or behavior that is crude, tasteless, or explicit"},
+{"nude", "The state of wearing absolutely no clothes"},
+{"exhibitionist", "Someone who gets a thrill out of showing off their body in public"},
+{"virginity", "The state of never having had sexual intercourse"},
+{"abstinence", "The choice to completely hold back from indulging in things like alcohol or sex"},
+{"sarcasm", "Using dry, mocking language to say the exact opposite of what you mean"},
+{"shebeen", "An informal, sometimes unlicensed local tavern where the drinks flow cheaply"},
+{"kabza", " Often called 'The King of Amapiano'"},
+{"momo", "Often called 'The King of Private School Amapiano'"},
+{"tenderpreneur", "A corrupt businessman who gets rich through shady government contracts"},
+{"zol", "A hand-rolled cigarette, quite frequently containing cannabis"},
+{"loadshedding", "The scheduled national power cuts that ruin your plans and your fridge contents"},
+{"kak", "A versatile curse word meaning crap, nonsense, or terrible"},
+{"stance", "Usual term for a vehicle that has been dropped 'on da floor'"},
+{"jail", "You do NOT want to drop the soap inside this place"}
+
+};
+
+string scrambleWord(string word) {
+	std::random_device rd; // 1. Create a random device to seed the generator
+	std::mt19937 g(rd());  // 2. Initialize the generator engine
+	std::shuffle(word.begin(), word.end(), g); // 3. Use std::shuffle and pass the engine as the 3rd argument
+	
+	return word;
+}
+
+void playGame(const vector<Word>& wordList, int timeLimit) {
+    int score = 0;
+
+    cout << "\nPress ENTER to start...";
+	cin.ignore();
+	cin.get();
+	
+	auto startTime = steady_clock::now();
+	
+	cout << "Timer started\n";
+	
+
+    while (true) {
+        auto currentTime = steady_clock::now();
+        auto elapsed = duration_cast<seconds>(currentTime - startTime).count();
+
+       if (elapsed >= timeLimit) {
+    cout << "\nTime's up!" << endl;
+    cout << "Final Score: " << score << endl;
+
+    if (score >= 100) {
+        cout << "\n🔥 You are actually veryy good, we should be friends. "
+             << "Whatsapp me: +27670752611" << endl;
+    }
+    else if (score >= 50) {
+        cout << "\n👍 You reached " << score
+             << " points, so you're not half bad ig..." << endl;
+    }
+    else {
+        cout << "\n💀 Better luck next time." << endl;
+    }
+
+    break;  
+}
+
+       static random_device rd;
+	   static mt19937 gen(rd());
+	   
+	   uniform_int_distribution<> dist(0, wordList.size() - 1);
+	   
+	   Word chosen = wordList[dist(gen)];
+	   
+	   string scrambled = scrambleWord(chosen.word);
+
+        cout << "\nScrambled word: " << scrambled << endl;
+        cout << "Hint: " << chosen.hint << endl;
+        cout << "\nYour Guess (small letters only): ";
+
+        string guess;
+        cin >> guess;
+        
+        // ANSI escape codes for coloring text in the terminal
+    const std::string GREEN = "\033[32m";
+    const std::string RED   = "\033[31m";
+    const std::string RESET = "\033[0m";
+
+    // UTF-8 Unicode characters for the tick (✔) and cross (✖)
+    const std::string TICK  = "\u2714";
+    const std::string CROSS = "\u2716";
+
+        if (guess == chosen.word) {
+            cout << GREEN << TICK << " Correct!\n" << RESET;
+            score += 10;
+        }
+        else {
+            cout << RED << CROSS <<  " Wrong! The word was: " << chosen.word << RESET << endl;
+            score -= 5;
+        }
+
+        cout << "Current score: " << score << endl;
+    }
+
+}
+
+void myRandomStories() {
+
+    vector<string> randomz = {
+    	
+        "I built this game because I was bored.",
+        "The first version had only 0 words. yes, zero.",
+        "I actually have never scored over 120 points and I created this game.",
+        "South African fact: A robot is a traffic light.",
+        "The developer's favourite phrase is probably 'that's crazy'.",
+        "Hidden tip: Longer words are usually worth the same points as shorter words.",
+        "Random fact: The vuvuzela can exceed 120 decibels. and i don't even know what a decibel is...it's probably a wave mark or sumn.",
+        "This game contains more than 150 words, lowkey.",
+        "Nobody has proven that getting 100 points is impossible. but it is difficult in adult mode."
+		"[FACT] South Africa has 11 official languages...and 10+ unofficial ones.",
+		"[DEV] I wrote this section at 2 AM...maybe...maybe not. hehehe.",
+		"[TIP] Guessing quickly is often better than overthinking. trust me on this",
+		"[SECRET] Some words appear more often than others.",
+		"[LORE] Legend says a player once reached 200 points...back then twenty-twenty-Never....hehehe.",
+		"I, presonally actually built this game using C++ , yess C++, and questionable sleep schedules.",
+		"I once spent 3 hours debugging a missing semicolon...nah, I'm joking thanks to LLMs'",
+		"My favourite part of programming is when the code works on the first try (which never happens).",
+		"I actually added this fact section because he ran out of better ideas...it allows me to just rant.",
+		"Whatsapp me at your own risk.",
+		"My current current record is 105 points."
+		"oh yeah btw, if you reach 100 points, you get my phone number...hehehe.",
+		"South Africa lost 2 to Mexico, whyy? I blame Hugo, lowkey...personally tho'",
+		"I lowkey (lowkey) built an app called P4SC4L, it's Microsoft store. YES, I'm MrPascal, it's like my pseudoName, hehehehe. It's expensive, isn't it?\n\n BUY IT NOW!!",
+    };
+
+    static random_device rd;
+    static mt19937 gen(rd());
+
+    uniform_int_distribution<> dist(0, randomz.size() - 1);
+
+    cout << "\n=== RANDOMZ ===\n\ndid you know? : ";
+    cout << randomz[dist(gen)] << endl;
+}
+
+
+int main() {
+
+    while (true) {
+
+        cout << "\n========== THE-P4SC4L-GAME ===========\n\n";
+        cout << "Choose Respective Section:\n\n";
+        cout << "1. Kiddies (60s)\n";
+        cout << "2. Adult (45s)\n";
+        cout << "3. MyRandomz\n";
+        cout << "4. Exit\n";
+        cout << "> ";
+
+        int choice;
+        cin >> choice;
+
+        if (choice == 1) {
+            playGame(easyWords, 60);
+        }
+        else if (choice == 2) {
+            playGame(hardWords, 45);
+        }
+        else if (choice == 3) {
+            myRandomStories();
+        }
+        else if (choice == 4) {
+            cout << "\nThanks for playing!\n";
+            break;
+        }
+        else {
+            cout << "\nInvalid choice.\n";
+        }
+    }
+
+    return 0;
+}
